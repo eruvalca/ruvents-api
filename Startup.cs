@@ -40,6 +40,8 @@ namespace ruvents_api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -50,8 +52,6 @@ namespace ruvents_api
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
     }
 }

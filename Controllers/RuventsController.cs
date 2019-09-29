@@ -79,6 +79,8 @@ namespace ruvents_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Ruvent>> PostRuvent(Ruvent ruvent)
         {
+            ruvent.CreateDate = DateTime.Now;
+
             _context.Ruvents.Add(ruvent);
             await _context.SaveChangesAsync();
 

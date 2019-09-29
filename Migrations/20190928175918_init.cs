@@ -16,9 +16,15 @@ namespace ruvents_api.Migrations
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: true),
+                    StartTimeHour = table.Column<int>(nullable: false),
+                    StartTimeMinute = table.Column<int>(nullable: false),
+                    EndTimeHour = table.Column<int>(nullable: false),
+                    EndTimeMinute = table.Column<int>(nullable: false),
+                    CreateDate = table.Column<DateTime>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    ModifyDate = table.Column<DateTime>(nullable: true),
+                    ModifyBy = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
