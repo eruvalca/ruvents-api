@@ -23,12 +23,10 @@ namespace ruvents_api.Controllers
         [HttpGet("home/{date}")]
         public async Task<ActionResult<IEnumerable<Ruvent>>> GetRuvents(DateTime date)
         {
-            var thisMonthRuvents = await _context.Ruvents
+            return await _context.Ruvents
                 .Where(r => r.Date.Value.Month == date.Month && r.Date.Value.Year == date.Year)
                 .OrderBy(r => r.Date)
                 .ToListAsync();
-
-            return thisMonthRuvents;
         }
 
         // GET: api/Ruvents/5
