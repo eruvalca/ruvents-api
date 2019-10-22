@@ -46,8 +46,8 @@ namespace ruvents_api.Controllers
         // PUT: api/Ruvents/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRuvent(int id, Ruvent ruvent)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UpdateRuvent(int id, Ruvent ruvent)
         {
             if (id != ruvent.RuventId)
             {
