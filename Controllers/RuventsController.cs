@@ -20,12 +20,12 @@ namespace ruvents_api.Controllers
             _context = context;
         }
 
-        [HttpGet("home/{date}")]
-        public async Task<ActionResult<IEnumerable<Ruvent>>> GetRuvents(DateTime date)
+        [HttpGet("{month}/{year}")]
+        public async Task<ActionResult<IEnumerable<Ruvent>>> GetRuvents(int month, int year)
         {
             return await _context.Ruvents
-                .Where(r => r.Date.Value.Month == date.Month && r.Date.Value.Year == date.Year)
-                .OrderBy(r => r.Date)
+                .Where(r => r.StartDate.Value.Month == month && r.StartDate.Value.Year == year)
+                .OrderBy(r => r.StartDate)
                 .ToListAsync();
         }
 

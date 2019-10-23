@@ -34,7 +34,8 @@ namespace ruvents_api
                 options.AddPolicy(MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("https://eruvalca.github.io")
+                        //builder.WithOrigins("https://eruvalca.github.io")
+                        builder.AllowAnyOrigin()
                         .AllowAnyHeader().AllowAnyMethod();
                     });
             });
