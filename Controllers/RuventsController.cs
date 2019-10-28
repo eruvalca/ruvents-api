@@ -102,6 +102,26 @@ namespace ruvents_api.Controllers
             return ruvent;
         }
 
+        [HttpGet("attendance/{id}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetRuventAttendance(int id)
+        {
+            var attendance = await _context.RuventToUser.Where(x => x.RuventId == id).Include("User").ToListAsync();
+
+            return (from a in attendance
+                    select new
+                    {
+                        a.RuventToUserId,
+                        a.IsAttending,
+                        a.RuventId,
+                        a.UserId,
+                        a.User.Username,
+                        a.User.FirstName,
+                        a.User.LastName,
+                        a.User.NickName
+                    }).ToList();
+
+        }
+
         private bool RuventExists(int id)
         {
             return _context.Ruvents.Any(e => e.RuventId == id);
