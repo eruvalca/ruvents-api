@@ -13,5 +13,7 @@ namespace ruvents_api.Models
         }
 
         public DbSet<Ruvent> Ruvents { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<RuventToUser> RuventToUser { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ruvents_api.Models;
 
 namespace ruvents_api.Migrations
 {
     [DbContext(typeof(RuventsContext))]
-    partial class RuventsContextModelSnapshot : ModelSnapshot
+    [Migration("20191027200846_regUser")]
+    partial class regUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,31 +66,6 @@ namespace ruvents_api.Migrations
                     b.ToTable("Ruvents");
                 });
 
-            modelBuilder.Entity("ruvents_api.Models.RuventToUser", b =>
-                {
-                    b.Property<int>("RuventToUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsAttending")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RuventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RuventToUserId");
-
-                    b.HasIndex("RuventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RuventToUser");
-                });
-
             modelBuilder.Entity("ruvents_api.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -117,21 +94,6 @@ namespace ruvents_api.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ruvents_api.Models.RuventToUser", b =>
-                {
-                    b.HasOne("ruvents_api.Models.Ruvent", "Ruvent")
-                        .WithMany()
-                        .HasForeignKey("RuventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ruvents_api.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
