@@ -100,6 +100,28 @@ namespace ruvents_api.Controllers
             });
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Username == User.Identity.Name);
+
+            if (currentUser == null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Ok(new
+                {
+                    currentUser.Username,
+                    currentUser.FirstName,
+                    currentUser.LastName,
+                    currentUser.NickName
+                });
+            }
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using HMACSHA512 hmac = new HMACSHA512();

@@ -53,6 +53,7 @@ namespace ruvents_api.Controllers
             }
 
             _context.Entry(ruvent).State = EntityState.Modified;
+            ruvent.ModifyDate = DateTime.Now;
 
             try
             {
