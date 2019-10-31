@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ruvents_api.Models;
+using ruvents_api.ViewModels;
 
 namespace ruvents_api.Controllers
 {
@@ -112,12 +113,13 @@ namespace ruvents_api.Controllers
             }
             else
             {
-                return Ok(new
+                return Ok(new UserViewModel()
                 {
-                    currentUser.Username,
-                    currentUser.FirstName,
-                    currentUser.LastName,
-                    currentUser.NickName
+                    UserId = currentUser.UserId,
+                    Username = currentUser.Username,
+                    FirstName = currentUser.FirstName,
+                    LastName = currentUser.LastName,
+                    NickName = currentUser.NickName
                 });
             }
         }
