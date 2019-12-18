@@ -43,6 +43,30 @@ namespace ruvents_api.Controllers
             return ruvent;
         }
 
+        [HttpGet("audit/{id}")]
+        public async Task<ActionResult<Object>> GetRuventAudit(int id)
+        {
+            var ruvent = await _context.Ruvents.FindAsync(id);
+
+            if (ruvent == null)
+            {
+                return NotFound();
+            }
+
+            var creator = _context.Users.Where(x => x.Username == ruvent.CreatedBy).Select(u => new { u.NickName, ruvent.CreateDate }).FirstOrDefault();
+            var modifier = _context.Users.Where(x => x.Username == ruvent.ModifyBy).Select(u => new { u.NickName, ruvent.ModifyDate }).FirstOrDefault();
+
+            var audit = new
+            {
+                CreatedBy = string.IsNullOrEmpty(creator.NickName) ? string.Empty : creator.NickName,
+                CreateDate = creator.CreateDate.ToString() ?? string.Empty,
+                ModifyBy = modifier == null ? string.Empty : (modifier.NickName == null ? string.Empty : modifier.NickName),
+                ModifyDate = modifier == null ? string.Empty : (modifier.ModifyDate == null ? string.Empty : modifier.ModifyDate.ToString())
+            };
+
+            return audit;
+        }
+
         [Authorize]
         [HttpPost("{id}")]
         public async Task<IActionResult> UpdateRuvent(int id, Ruvent ruvent)
