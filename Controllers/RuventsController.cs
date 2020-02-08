@@ -76,8 +76,11 @@ namespace ruvents_api.Controllers
                 return BadRequest();
             }
 
+            var currentUser = _context.Users.Where(u => u.Username == User.Identity.Name).FirstOrDefault();
+
             _context.Entry(ruvent).State = EntityState.Modified;
             ruvent.ModifyDate = DateTime.Now;
+            ruvent.ModifyBy = currentUser.NickName == null || currentUser.NickName == string.Empty ? currentUser.Username : currentUser.NickName;
 
             try
             {
@@ -102,7 +105,10 @@ namespace ruvents_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Ruvent>> PostRuvent(Ruvent ruvent)
         {
+            var currentUser = _context.Users.Where(u => u.Username == User.Identity.Name).FirstOrDefault();
+
             ruvent.CreateDate = DateTime.Now;
+            ruvent.CreatedBy = currentUser.NickName == null || currentUser.NickName == string.Empty ? currentUser.Username : currentUser.NickName;
 
             _context.Ruvents.Add(ruvent);
             await _context.SaveChangesAsync();
