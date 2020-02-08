@@ -22,12 +22,33 @@ namespace ruvents_api.Controllers
         }
 
         [HttpGet("{month}/{year}")]
-        public async Task<ActionResult<IEnumerable<Ruvent>>> GetRuvents(int month, int year)
+        public async Task<ActionResult<IEnumerable<RuventAttendanceVM>>> GetRuvents(int month, int year)
         {
-            return await _context.Ruvents
-                .Where(r => r.StartDate.Value.Month == month && r.StartDate.Value.Year == year)
-                .OrderBy(r => r.StartDate)
-                .ToListAsync();
+            var vms = await (from r in _context.Ruvents
+                            where r.StartDate.Value.Month == month && r.StartDate.Value.Year == year
+                            select new RuventAttendanceVM
+                            {
+                                RuventId = r.RuventId,
+                                Title = r.Title,
+                                Description = r.Description,
+                                Address = r.Address,
+                                StartDate = r.StartDate,
+                                StartTime = r.StartTime,
+                                EndDate = r.EndDate,
+                                EndTime = r.EndTime,
+                                CreateDate = r.CreateDate,
+                                CreatedBy = r.CreatedBy,
+                                ModifyDate = r.ModifyDate,
+                                ModifyBy = r.ModifyBy
+                            }).ToListAsync();
+
+            foreach (var vm in vms)
+            {
+                vm.Attending = _context.RuventToUser.Where(r => r.RuventId == vm.RuventId && r.IsAttending == true).Count();
+                vm.NotAttending = _context.RuventToUser.Where(r => r.RuventId == vm.RuventId && r.IsAttending == false).Count();
+            }
+
+            return vms.OrderBy(r => r.StartDate).ToList();
         }
 
         [HttpGet("{id}")]
