@@ -32,7 +32,7 @@ namespace ruvents_api.Controllers
                         a.IsAttending,
                         a.RuventId,
                         a.UserId,
-                        a.User.Username,
+                        a.User.PhoneNumber,
                         a.User.FirstName,
                         a.User.LastName,
                         a.User.NickName
